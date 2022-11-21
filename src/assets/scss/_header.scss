@@ -1,0 +1,27 @@
+@use "variables";
+
+.wc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding-left: variables.$space;
+  padding-right: variables.$space;
+
+  &__right {
+    &-item {
+      display: inline-block;
+      padding: variables.$space;
+
+      &--active {
+        border-bottom: 2px solid #620726;
+        color: #620726 !important;
+      }
+    }
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}

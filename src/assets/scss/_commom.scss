@@ -1,0 +1,38 @@
+@use "variables";
+
+.u-padding-left {
+  padding-left: variables.$space;
+}
+
+.u-padding-left-1o2 {
+  padding-left: variables.$space-1o2;
+}
+
+.u-padding-right {
+  padding-right: variables.$space;
+}
+
+.u-padding-right-1o2 {
+  padding-right: variables.$space-1o2;
+}
+
+.u-margin-top {
+  padding-top: variables.$space;
+}
+
+.u-margin-bottom {
+  padding-bottom: variables.$space-2x;
+}
+
+.u-scroll {
+  position: fixed;
+  width: 100%;
+  overflow: auto;
+  inset: 0;
+  top: 56px;
+}
+
+.u-full-width {
+  position: relative;
+  width: 100%;
+}

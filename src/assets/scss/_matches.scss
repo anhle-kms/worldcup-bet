@@ -1,0 +1,51 @@
+@use "variables";
+
+.wc-matches {
+  &__item {
+    padding: variables.$space;
+    border-radius: 5px;
+    margin-top: variables.$space-2x;
+    background-color: white;
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%), 0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+
+    &-header {
+      display: flex;
+      justify-content: space-between;
+    }
+    &-info {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: variables.$space 0;
+    }
+
+    &-vote {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 variables.$space;
+
+      button {
+        width: 25%;
+      }
+    }
+
+    &--today {
+      display: inline-flex;
+      color: white;
+      background-color: #1976d2;
+      padding: 0 2px;
+      border-radius: 2px;
+      margin-left: 2px;
+      transform: scale(1) translate(0%, -50%);
+    }
+  }
+
+  &__team-home {
+    padding-right: variables.$space;
+  }
+
+  &__team-away {
+    padding-left: variables.$space;
+  }
+}
