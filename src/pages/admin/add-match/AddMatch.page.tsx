@@ -3,7 +3,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { isNil, isEmpty, omitBy } from 'lodash';
+import { isNil, isEmpty, isNaN } from 'lodash';
 import moment from "moment";
 import { TeamModel } from "../../../interface/team.model";
 import { getTeams } from "../../../services/team.service";
@@ -18,8 +18,8 @@ const AddMatch = () => {
     teamAway: '',
     teamHomeImg: '',
     teamAwayImg: '',
-    teamHomeScore: null,
-    teamAwayScore: null,
+    teamHomeScore: 0,
+    teamAwayScore: 0,
     price: 0,
     time: moment().toISOString()
   });
@@ -54,7 +54,8 @@ const AddMatch = () => {
   }
 
   const handleSetFieldvalue = (e, fieldName: string) => {
-    setData(prevData => ({ ...prevData, [fieldName]: parseInt(e.target.value) }))
+    const value =  parseInt(e.target.value);
+    setData(prevData => ({ ...prevData, [fieldName]: (!isNaN(value) ? value : '') }))
   }
 
   const handleAddMatch = async () => {
@@ -73,16 +74,16 @@ const AddMatch = () => {
       return;
     }
     try {
-      await addMatch(omitBy({
+      await addMatch({
         teamHome: data.teamHome,
         teamHomeImg: data.teamHomeImg,
-        teamHomeScore: (!isNil(data.teamHomeScore) && isEmpty(data.teamHomeScore)) ? data.teamHomeScore : undefined,
+        teamHomeScore: (!isNil(data.teamHomeScore) && !isNaN(data.teamHomeScore) && !isEmpty(data.teamHomeScore)) ? data.teamHomeScore : null,
         teamAway: data.teamAway,
-        teamAwayScore: (!isNil(data.teamAwayScore) && isEmpty(data.teamAwayScore)) ? data.teamAwayScore : undefined,
+        teamAwayScore: (!isNil(data.teamAwayScore) && !isNaN(data.teamAwayScore) && !isEmpty(data.teamAwayScore)) ? data.teamAwayScore : null,
         teamAwayImg: data.teamAwayImg,
         price: data.price,
         time: moment(data.time).toISOString()
-      }, isNil));
+      });
       toast.success("Add successfully");
       naviagte("/admin/matches");
     } catch (error) {
@@ -156,8 +157,8 @@ const AddMatch = () => {
         type="number"
         fullWidth
         sx={{ m: 1, margin: "2rem 0 0" }}
-        value={data.teamHomeScore}
-        onClick={e => handleSetFieldvalue(e, 'teamHomeScore')}
+        value={data.teamHomeScore || 0}
+        onChange={e => handleSetFieldvalue(e, 'teamHomeScore')}
       />
       <TextField
         id="team-away-score"
@@ -165,8 +166,8 @@ const AddMatch = () => {
         type="number"
         fullWidth
         sx={{ m: 1, margin: "2rem 0 0" }}
-        value={data.teamAwayScore}
-        onClick={e => handleSetFieldvalue(e, 'teamAwayScore')}
+        value={data.teamAwayScore || 0}
+        onChange={e => handleSetFieldvalue(e, 'teamAwayScore')}
       />
       <Button
         onClick={handleAddMatch}

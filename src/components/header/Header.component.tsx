@@ -103,12 +103,6 @@ const Header = () => {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem>
-            My account
-          </MenuItem>
-          <MenuItem>
-            Account History
-          </MenuItem>
           <MenuItem onClick={handleLogout}>
             Logout
           </MenuItem>

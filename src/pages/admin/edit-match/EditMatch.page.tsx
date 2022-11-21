@@ -3,7 +3,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
-import { isNil, isEmpty, omitBy } from 'lodash';
+import { isNil, isEmpty, isNaN } from 'lodash';
 import moment from "moment";
 import { TeamModel } from "../../../interface/team.model";
 import { getTeams } from "../../../services/team.service";
@@ -57,7 +57,8 @@ const EditMatch = () => {
   }
 
   const handleSetFieldvalue = (e, fieldName: string) => {
-    setData(prevData => ({ ...prevData, [fieldName]: parseInt(e.target.value) }))
+    const value =  parseInt(e.target.value);
+    setData(prevData => ({ ...prevData, [fieldName]: (!isNaN(value) ? value : '') }));
   }
 
   const handleAddMatch = async () => {
@@ -76,16 +77,16 @@ const EditMatch = () => {
       return;
     }
     try {
-      await updateMatch(data.id, omitBy({
+      await updateMatch(data.id, {
         teamHome: data.teamHome,
         teamHomeImg: data.teamHomeImg,
-        teamHomeScore: (!isNil(data.teamHomeScore) && isEmpty(data.teamHomeScore)) ? data.teamHomeScore : undefined,
+        teamHomeScore: (!isNil(data.teamHomeScore) && !isNaN(data.teamHomeScore) && !isEmpty(data.teamHomeScore)) ? data.teamHomeScore : null,
         teamAway: data.teamAway,
-        teamAwayScore: (!isNil(data.teamAwayScore) && isEmpty(data.teamAwayScore)) ? data.teamAwayScore : undefined,
+        teamAwayScore: (!isNil(data.teamAwayScore) && !isNaN(data.teamAwayScore) && !isEmpty(data.teamAwayScore)) ? data.teamAwayScore : null,
         teamAwayImg: data.teamAwayImg,
         price: data.price,
         time: moment(data.time).toISOString()
-      }, isNil));
+      });
       toast.success("Update successfully");
       naviagte("/admin/matches");
     } catch (error) {
@@ -160,7 +161,7 @@ const EditMatch = () => {
         fullWidth
         sx={{ m: 1, margin: "2rem 0 0" }}
         value={data.teamHomeScore}
-        onClick={e => handleSetFieldvalue(e, 'teamHomeScore')}
+        onChange={e => handleSetFieldvalue(e, 'teamHomeScore')}
       />
       <TextField
         id="team-away-score"
@@ -169,7 +170,7 @@ const EditMatch = () => {
         fullWidth
         sx={{ m: 1, margin: "2rem 0 0" }}
         value={data.teamAwayScore}
-        onClick={e => handleSetFieldvalue(e, 'teamAwayScore')}
+        onChange={e => handleSetFieldvalue(e, 'teamAwayScore')}
       />
       <Button
         onClick={handleAddMatch}
