@@ -18,7 +18,6 @@ const getVotesByMatchIds = async (userId: string, matchIds: string[]) => {
       const result = {};
       const votes = await getDocs(
         query(collection(db, "votes"),
-          where("matchRef", "in", matchIds),
           where("userRef", "==", userId)));
       if (votes.docs.length > 0) {
         votes.docs.forEach(item => {
