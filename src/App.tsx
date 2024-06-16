@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import './assets/main.scss';
 
-import background from './assets/images/background.jpg';
+import background from './assets/images/logo2.jpg';
 import { PureComponent } from "react";
 
 class App extends PureComponent {

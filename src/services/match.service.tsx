@@ -51,6 +51,24 @@ export const getMatches = (userId: string): Promise<MatchModel[]> => {
   })
 }
 
+export const getAllMatches = (): Promise<MatchModel[]> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const q = query(collection(db, "matches"));
+      const response = await getDocs(q);
+      const matches: MatchModel[] = [];
+      const pastMatchIds = [];
+      response.docs.forEach(res => {
+        const match = { ...res.data(), id: res.id } as unknown as MatchModel;
+        matches.push(match);
+      });
+      resolve(matches);
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
+
 export const getMatch = (matchId: string): Promise<MatchModel> => {
   return new Promise(async (resolve, reject) => {
     try {

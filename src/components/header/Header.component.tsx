@@ -52,11 +52,12 @@ const Header = () => {
   return (
     <header className="wc-header">
       <div className="wc-header__left">
-        World Cup Qatar 2022
+        EURO 2024
       </div>
       <div className="wc-header__right">
         <NavLink to="/home/matches" className={renderActivityClass}>Home</NavLink>
         <NavLink to="/home/history" className={renderActivityClass}>History</NavLink>
+        <NavLink to="/home/diamond-sponsor" className={renderActivityClass}>Dinamond Sponsor</NavLink>
         {user && user.isAdmin && <NavLink to="/admin/matches" className={renderActivityClass}>Manage matches</NavLink>}
         <IconButton
           onClick={handleClick}

@@ -8,7 +8,8 @@ export const RoutePath = {
     currentMatchList: 'matches',
     account: 'acount',
     history: 'history',
-    matchReport: 'match-report/:matchId'
+    matchReport: 'match-report/:matchId',
+    result: 'diamond-sponsor'
   },
   admin: {
     home: 'admin',
